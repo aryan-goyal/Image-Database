@@ -1,10 +1,10 @@
-<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?&style=for-the-badge&logo=python&logoColor=white"/>
+<p float="left">
+   <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?&style=for-the-badge&logo=pythonlogoColor=white"/>
+   <img alt="Flask" src="https://img.shields.io/badge/flask-%23000.svg?&style=for-the-badge&logo=flask&logoColor=white"/>
+   <img alt="Firebase" src="https://img.shields.io/badge/firebase-%23039BE5.svg?&style=for-the-badge&logo=firebase"/>
+   <img alt="Docker" src="https://img.shields.io/badge/docker-%230db7ed.svg?&style=for-the-badge&logo=docker&logoColor=white"/>
 
-<img alt="Flask" src="https://img.shields.io/badge/flask-%23000.svg?&style=for-the-badge&logo=flask&logoColor=white"/>
-
-<img alt="Firebase" src="https://img.shields.io/badge/firebase-%23039BE5.svg?&style=for-the-badge&logo=firebase"/>
-
-<img alt="Docker" src="https://img.shields.io/badge/docker-%230db7ed.svg?&style=for-the-badge&logo=docker&logoColor=white"/>
+</p>
 
 # ShopifyCodingChallenge
 
@@ -12,9 +12,7 @@
 
 ## Development
 
-- This is the application was developed using [Falsk](https://flask.palletsprojects.com/en/1.1.x/) and Firebase [Firebase](https://firebase.google.com/).
-
-- This application is deployed to [Firebase Cloud Run](https://firebase.google.com/docs/hosting/cloud-run).
+This is the application was developed using [Falsk](https://flask.palletsprojects.com/en/1.1.x/) (a microframework for Python) and [Firebase](https://firebase.google.com/) (a flexible, scalable database for mobile, web, and server development), and deployed to Cloud Run (a serverless environment to run containers on Google Cloud).
 
 ## Local Setup
 
