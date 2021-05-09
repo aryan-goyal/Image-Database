@@ -12,13 +12,13 @@
 
 ## Development
 
-This is the application was developed using [Falsk](https://flask.palletsprojects.com/en/1.1.x/) (a microframework for Python) and [Firebase](https://firebase.google.com/) (a flexible, scalable database for mobile, web, and server development), and deployed to Cloud Run (a serverless environment to run containers on Google Cloud).
+This is the application was developed using [Flask](https://flask.palletsprojects.com/en/1.1.x/) (a microframework for Python) and [Firebase](https://firebase.google.com/) (a flexible, scalable database for mobile, web, and server development), and deployed to Cloud Run (a serverless environment to run containers on Google Cloud).
 
 ## Local Setup
 
 - On linux or macOS, run `source setup.sh`. This will create a python virutal enviroment with all of the packages required to execute the application.
 
-- If there is an issue related to packaging dependency, then the `pip3 -r requirements.txt` can be used to install the same package verions used for development.
+- If there is an issue related to packaging dependency, then the `pip3 -r requirements.txt` can be used to install the same package version used for development.
 
 - The file `env.py` contains the enviroment variables used in the Flask app. However, for security reasons this file has been added to .gitignore. A tempeleate version, `env.py.template` has been included for format purposes.
 
