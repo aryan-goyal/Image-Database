@@ -36,14 +36,16 @@ def create():
             # upload to GCS
             filename = secure_filename(file.filename)
             blob = bucket.blob(filename)
-            blob.upload_from_file(file)
-            # log entry in firestore
-            file_type = file.content_type
-            file_size = humanize.naturalsize(blob.size)
-            file_updated = blob.updated
-            file_url = "https://storage.googleapis.com/shopifycodingchallenge.appspot.com/" + filename
-            doc_coll.document(doc_coll.document().id).set(
-                {"filename": filename, "type": file_type, "size": file_size, "Created": file_updated, "Url": file_url})
+            stats = blob.exists()
+            if stats == False:
+                blob.upload_from_file(file)
+                # log entry in firestore
+                file_type = file.content_type
+                file_size = humanize.naturalsize(blob.size)
+                file_updated = blob.updated
+                file_url = "https://storage.googleapis.com/shopifycodingchallenge.appspot.com/" + filename
+                doc_coll.document(doc_coll.document().id).set(
+                    {"filename": filename, "type": file_type, "size": file_size, "Created": file_updated, "Url": file_url})
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
