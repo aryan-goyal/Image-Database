@@ -1,7 +1,12 @@
 # Required imports
 import os
-from flask import Flask, request, jsonify
+import humanize
+from flask import Flask, request, jsonify, flash, redirect
 from firebase_admin import credentials, firestore, initialize_app
+from google.cloud import storage
+
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -10,7 +15,13 @@ app = Flask(__name__)
 cred = credentials.Certificate('key.json')
 default_app = initialize_app(cred)
 db = firestore.client()
-todo_ref = db.collection('imageDatabase')
+doc_coll = db.collection('imageDatabase')
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"
+client = storage.Client()
+bucket = client.get_bucket('shopifycodingchallenge.appspot.com')
+
+ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'tiff', 'gif'])
 
 
 @app.route('/add', methods=['POST'])
@@ -20,8 +31,18 @@ def create():
         e.g. json={'title': 'Write a blog post'}
     """
     try:
-        id = request.json['id']
-        todo_ref.document(id).set(request.json)
+        file = request.files['image']
+        if file:
+            # upload to GCS
+            filename = secure_filename(file.filename)
+            blob = bucket.blob(filename)
+            blob.upload_from_file(file)
+            # log entry in firestore
+            doc_coll.document(doc_coll.document().id).set(
+                {"filename": filename, "type": file.content_type, "size": humanize.naturalsize(blob.size)})
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An Error Occured: {e}"
@@ -38,10 +59,10 @@ def read():
         # Check if ID was passed to URL query
         todo_id = request.args.get('id')
         if todo_id:
-            todo = todo_ref.document(todo_id).get()
+            todo = doc_coll.document(todo_id).get()
             return jsonify(todo.to_dict()), 200
         else:
-            all_todos = [doc.to_dict() for doc in todo_ref.stream()]
+            all_todos = [doc.to_dict() for doc in doc_coll.stream()]
             return jsonify(all_todos), 200
     except Exception as e:
         return f"An Error Occured: {e}"
@@ -55,7 +76,7 @@ def delete():
     try:
         # Check for ID in URL query
         todo_id = request.args.get('id')
-        todo_ref.document(todo_id).delete()
+        doc_coll.document(todo_id).delete()
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An Error Occured: {e}"
@@ -63,4 +84,4 @@ def delete():
 
 port = int(os.environ.get('PORT', 8080))
 if __name__ == '__main__':
-    app.run(threaded=True, host='0.0.0.0', port=port)
+    app.run(threaded=True, host='0.0.0.0', port=port, debug=False)
