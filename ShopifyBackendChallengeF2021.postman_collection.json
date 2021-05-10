@@ -33,8 +33,15 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\"id\": \"1\", \"name\": \"car\", \"url\": \"url_to_car\"}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"description": "This is the image you are trying to upload.",
+							"type": "file",
+							"src": "/C:/Users/Aryan/Downloads/pictures/sunrise.jpg"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,6 +62,35 @@
 						"add"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/delete?filename=car.jpg",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"delete"
+					],
+					"query": [
+						{
+							"key": "filename",
+							"value": "car.jpg"
+						}
+					]
+				},
+				"description": "Delete an image from Firestore collection and Google Cloud Storage repository."
 			},
 			"response": []
 		}

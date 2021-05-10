@@ -38,8 +38,12 @@ def create():
             blob = bucket.blob(filename)
             blob.upload_from_file(file)
             # log entry in firestore
+            file_type = file.content_type
+            file_size = humanize.naturalsize(blob.size)
+            file_updated = blob.updated
+            file_url = "https://storage.googleapis.com/shopifycodingchallenge.appspot.com/" + filename
             doc_coll.document(doc_coll.document().id).set(
-                {"filename": filename, "type": file.content_type, "size": humanize.naturalsize(blob.size)})
+                {"filename": filename, "type": file_type, "size": file_size, "Created": file_updated, "Url": file_url})
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
@@ -71,12 +75,18 @@ def read():
 @app.route('/delete', methods=['GET', 'DELETE'])
 def delete():
     """
-        delete() : Delete a document from Firestore collection.
+        delete() : Delete an image from Firestore collection and Google Cloud Storage repository.
     """
     try:
         # Check for ID in URL query
-        todo_id = request.args.get('id')
-        doc_coll.document(todo_id).delete()
+        filename = secure_filename(request.args['filename'])
+        if filename:
+            query = doc_coll.where("filename", "==", filename).stream()
+            blob = bucket.blob(filename)
+            blob.delete()
+            for doc in query:
+                doc_coll.document(doc.id).delete()
+
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An Error Occured: {e}"
