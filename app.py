@@ -6,7 +6,6 @@ from firebase_admin import credentials, firestore, initialize_app
 from google.cloud import storage
 
 from werkzeug.utils import secure_filename
-from werkzeug.datastructures import FileStorage
 
 # Initialize Flask app
 app = Flask(__name__)

@@ -39,7 +39,7 @@
 							"key": "image",
 							"description": "This is the image you are trying to upload.",
 							"type": "file",
-							"src": "/C:/Users/Aryan/Downloads/pictures/sunrise.jpg"
+							"src": "/C:/Users/Aryan/Downloads/pictures/car.jpg"
 						}
 					],
 					"options": {
@@ -91,6 +91,35 @@
 					]
 				},
 				"description": "Delete an image from Firestore collection and Google Cloud Storage repository."
+			},
+			"response": []
+		},
+		{
+			"name": "GetImageByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/search?filename=car.jpg",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "filename",
+							"value": "car.jpg"
+						}
+					]
+				},
+				"description": "Get the image by name"
 			},
 			"response": []
 		}

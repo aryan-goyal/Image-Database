@@ -5,3 +5,4 @@ python3 -m venv env
 pip install --upgrade pip
 pip3 install flask
 pip3 install firebase-admin
+pip3 install humanize
