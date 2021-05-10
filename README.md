@@ -106,7 +106,7 @@ curl --location --request GET 'http://0.0.0.0:8080/search?filename=sunrise.jpg'
 
 ## Testing
 
-The application can be can tested using two different methods. Firstly, using PyTest (framework used for simple unit tests to complex functional tests), which are in the `tests/tests.py`. The second is the Postman Collection which is a group of saved requests organized into a folder. This file can be imported into Postman and each to use for endpoint testing.
+The application can be can tested using two different methods. Firstly, using PyTest (framework used for simple unit tests to complex functional tests), which are in the `tests/tests.py`. The second is the Postman Collection which is a group of saved requests organized into a folder. This file can be imported into Postman and used for endpoint testing.
 
 ## Local Setup
 
