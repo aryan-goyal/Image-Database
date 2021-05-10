@@ -55,19 +55,24 @@ def create():
 @app.route('/search', methods=['GET'])
 def read():
     """
-        read() : Fetches documents from Firestore collection as JSON.
+        read() : Fetches all documents from Firestore collection as JSON.
         todo : Return document that matches query ID.
         all_todos : Return all documents.
     """
     try:
         # Check if ID was passed to URL query
-        todo_id = request.args.get('id')
-        if todo_id:
-            todo = doc_coll.document(todo_id).get()
-            return jsonify(todo.to_dict()), 200
+        get_by_id = request.args.get('id')
+        get_by_filename = request.args.get('filename')
+        if get_by_id:
+            image = doc_coll.document(get_by_id).get()
+            return jsonify(image.to_dict()), 200
+        elif get_by_filename:
+            query = doc_coll.where("filename", "==", get_by_filename).stream()
+            single_image = [doc.to_dict() for doc in query]
+            return jsonify(single_image), 200
         else:
-            all_todos = [doc.to_dict() for doc in doc_coll.stream()]
-            return jsonify(all_todos), 200
+            all_images = [doc.to_dict() for doc in doc_coll.stream()]
+            return jsonify(all_images), 200
     except Exception as e:
         return f"An Error Occured: {e}"
 
@@ -78,7 +83,6 @@ def delete():
         delete() : Delete an image from Firestore collection and Google Cloud Storage repository.
     """
     try:
-        # Check for ID in URL query
         filename = secure_filename(request.args['filename'])
         if filename:
             query = doc_coll.where("filename", "==", filename).stream()
