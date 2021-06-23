@@ -7,10 +7,6 @@
 
 </p>
 
-# Shopify Developer Intern Challenge
-
-[Fall 2021 - Shopify Developer Intern Challenge](https://docs.google.com/document/d/1ZKRywXQLZWOqVOHC4JkF3LqdpO3Llpfk_CkZPR8bjak/edit#)
-
 ## Development
 
 This application was developed using [Flask](https://flask.palletsprojects.com/en/1.1.x/) (a microframework for Python) and [Firebase](https://firebase.google.com/) (a flexible, scalable database for mobile, web, and server development). The images themselves reside on [Google Cloud Storage](https://cloud.google.com/storage).
